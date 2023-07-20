@@ -1,0 +1,24 @@
+.home-container {
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
+
+    // background: #633cc7;
+    // background: linear-gradient(-120deg, #643CC7 0%, rgba(162, 60, 192, 1) 73%);
+
+    .home-card {
+        max-width: 40%;
+        width: 100%;
+
+        .home-card-image {
+            width: 250px;
+            height: auto;
+
+            > img {
+                -webkit-user-drag: none;
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}

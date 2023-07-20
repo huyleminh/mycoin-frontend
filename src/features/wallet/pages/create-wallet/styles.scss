@@ -1,0 +1,28 @@
+.create-wallet-container {
+    max-width: 100%;
+    height: 100%;
+
+    .create-wallet-wrapper {
+        max-width: 35%;
+        min-width: 500px;
+
+        .create-wallet-method {
+            transition: all 0.25s ease;
+            width: 100%;
+
+            &:hover {
+                background-color: #ececec;
+            }
+
+            .create-wallet-method-logo {
+                width: 100px;
+                height: 80px;
+
+                img {
+                    width: auto;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

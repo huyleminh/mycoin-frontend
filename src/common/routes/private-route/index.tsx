@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Loading } from "../../components";
-// import { useAuth } from "../../contexts";
+import { useAuth } from "../../contexts";
 
 export interface IPrivateRouteProps {
     element: JSX.Element;
 }
 
 export function PrivateRoute(props: IPrivateRouteProps) {
-    // const authContext = useAuth();
+    const authContext = useAuth();
     const [process, setProcess] = useState({ isAuth: false, isLoading: true });
 
     useEffect(() => {
         let timeoutId: number;
 
-        // const authInfo = authContext.userKeyInfo;
+        const authInfo = authContext.userKeyInfo;
 
-        // if (JSON.stringify(authInfo) === "{}" || !authInfo.privateKey || !authInfo.publickey || !authInfo.timestamp) {
-        //     setProcess({ isAuth: false, isLoading: false });
-        //     return;
-        // }
+        if (JSON.stringify(authInfo) === "{}" || !authInfo.privateKey || !authInfo.publickey || !authInfo.timestamp) {
+            setProcess({ isAuth: false, isLoading: false });
+            return;
+        }
 
         timeoutId = setTimeout(() => {
             setProcess({ isAuth: true, isLoading: false });
-        }, 500);
+        }, 1000);
 
         return () => {
             timeoutId && clearTimeout(timeoutId);

@@ -1,15 +1,65 @@
 import { faArrowRotateRight, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../../common/contexts";
+import { StringFormatter } from "../../../../common/utils";
+import { HttpService } from "../../../../services";
 import "./styles.scss";
 
 export interface IWalletPortfolioProps {}
 
-export function WalletPortfolio(props: IWalletPortfolioProps) {
-    const handleRefreshBalance = () => {};
+export function WalletPortfolio(_props: IWalletPortfolioProps) {
+    const authContext = useAuth();
+    const { userKeyInfo } = authContext;
 
-    const handleCopyAddress = () => {};
+    const [balance, setBalance] = useState(0);
+    const [blockIndex, setBlockIndex] = useState(0);
+
+    const handleRefreshBalance = () => {
+        reloadBalanceAsync();
+    };
+
+    const handleCopyAddress = () => {
+        const publicKey = userKeyInfo.publickey!;
+
+        window.navigator.clipboard.writeText(publicKey).then(() => toast.success("Address copied!"));
+    };
+
+    const reloadBalanceAsync = async () => {
+        try {
+            const res = await HttpService.get<{ balance: number }>(`/wallet/${userKeyInfo.publickey!}/balance`);
+
+            if (res.code === 200) {
+                const data = res.data;
+                setBalance(data?.balance || 0);
+                return;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const reloadLatestBlockAysnc = async () => {
+        try {
+            const res = await HttpService.get<any>(`/blocks/latest`);
+
+            if (res.code === 200) {
+                const data = res.data;
+                setBlockIndex(data?.index || 0);
+                return;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        reloadBalanceAsync();
+        reloadLatestBlockAysnc();
+    }, []);
 
     return (
         <Container>
@@ -31,7 +81,7 @@ export function WalletPortfolio(props: IWalletPortfolioProps) {
                                 <Stack className="justify-content-center w-auto" gap={1}>
                                     <p className="fs-5 mb-0 text-uppercase">My TECO balance</p>
 
-                                    <p className="fs-5 text-dark mb-0">100 TECO</p>
+                                    <p className="fs-5 text-dark mb-0">{balance} TECO</p>
                                 </Stack>
 
                                 <Button
@@ -60,7 +110,9 @@ export function WalletPortfolio(props: IWalletPortfolioProps) {
                                         </Button>
                                     </p>
 
-                                    <p className="mb-0">asdasdasdasdadasda</p>
+                                    <p className="mb-0">
+                                        {StringFormatter.formatDisplayAddress(userKeyInfo.publickey!)}
+                                    </p>
                                 </Stack>
 
                                 <Link to="../send-tx">
@@ -84,7 +136,7 @@ export function WalletPortfolio(props: IWalletPortfolioProps) {
                                 <Stack className="justify-content-center" gap={1}>
                                     <p className="fs-5 text-dark mb-0">MyCoin Testnet</p>
 
-                                    <p className="mb-0">Last Block: 123</p>
+                                    <p className="mb-0">Last Block: {blockIndex + 1}</p>
                                 </Stack>
 
                                 <div className="portfolio-network-logo-container">

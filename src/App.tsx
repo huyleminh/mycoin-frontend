@@ -4,13 +4,22 @@ import { HomePage } from "./features/home";
 import { WalletFeature } from "./features/wallet";
 import { PrivateRoute } from "./common/routes";
 import { WalletDashboadFeature } from "./features/wallet-dashboad";
+import { SendTransactionPage, WalletPortfolio } from "./features/wallet-dashboad/pages";
 
 function App() {
     return (
         <main className="main">
             <Routes>
                 {/* Features */}
-                <Route path="/wallet/dashboard" element={<PrivateRoute element={<WalletDashboadFeature />} />} />
+                <Route path="/wallet/dashboard/*" element={<PrivateRoute element={<WalletDashboadFeature />} />}>
+                    <Route path="send-tx" element={<SendTransactionPage />} />
+
+                    <Route path="portfolio" element={<WalletPortfolio />} />
+
+                    <Route index element={<Navigate to={"portfolio"} replace />} />
+
+                    <Route path="*" />
+                </Route>
 
                 <Route path="/wallet/*" element={<WalletFeature />} />
 

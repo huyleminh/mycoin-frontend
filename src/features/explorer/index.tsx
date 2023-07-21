@@ -1,10 +1,9 @@
-import { Container, Nav, Navbar, Stack } from "react-bootstrap";
-import { Route, Routes, Navigate, Link, useLocation } from "react-router-dom";
-import { BlockchainPage } from "./pages/blockchain";
-import { TransactionHistoryPage } from "./pages/transaction";
-import "./styles.scss";
 import { useEffect } from "react";
+import { Container, Nav, Navbar, Stack } from "react-bootstrap";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { TransactionHistoryPage } from "./pages/transaction";
 import { TransactionDetailPage } from "./pages/transaction-detail";
+import "./styles.scss";
 
 export interface IExplorerFeatureProps {}
 
@@ -33,9 +32,9 @@ export function ExplorerFeature(_props: IExplorerFeatureProps) {
 
                     <Navbar.Collapse className="justify-content-start">
                         <Nav className="">
-                            <Nav.Link to="./blocks" as={Link} active={location.pathname === "/explorer/blocks"}>
+                            {/* <Nav.Link to="./blocks" as={Link} active={location.pathname === "/explorer/blocks"}>
                                 Blockchain
-                            </Nav.Link>
+                            </Nav.Link> */}
 
                             <Nav.Link
                                 to="./transactions"
@@ -55,13 +54,13 @@ export function ExplorerFeature(_props: IExplorerFeatureProps) {
 
             <Container className="mt-5">
                 <Routes>
-                    <Route path="/blocks" element={<BlockchainPage />} />
+                    {/* <Route path="/blocks" element={<BlockchainPage />} /> */}
 
                     <Route path="/transactions/:txId" element={<TransactionDetailPage />} />
 
                     <Route path="/transactions" element={<TransactionHistoryPage />} />
 
-                    <Route index element={<Navigate to="./blocks" />} />
+                    <Route index element={<Navigate to="./transactions" />} />
 
                     <Route path="*" element={<Navigate to="/404" replace />} />
                 </Routes>

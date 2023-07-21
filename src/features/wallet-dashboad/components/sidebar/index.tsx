@@ -1,4 +1,10 @@
-import { faArrowRightFromBracket, faArrowUpRightFromSquare, faChartLine, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import {
+    faArrowRightFromBracket,
+    faArrowUpRightFromSquare,
+    faChartLine,
+    faPaperPlane,
+    faClockRotateLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Nav } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
@@ -17,11 +23,6 @@ const SidebarList = [
         name: "Send Coin",
         path: "/wallet/dashboard/send-tx",
         icon: faPaperPlane,
-    },
-    {
-        name: "Explorer",
-        path: "/explorer",
-        icon: faArrowUpRightFromSquare,
     },
 ];
 
@@ -54,6 +55,36 @@ export function Sidebar(_props: SidebarProps) {
                         </Nav.Item>
                     );
                 })}
+
+                <hr className="mx-3" />
+
+                <Nav.Item>
+                    <Nav.Link
+                        className={`custom-nav-item-nav d-flex align-items-center`}
+                        as={Link}
+                        to={`/explorer/transactions?owner=${authContext.userKeyInfo.publickey}`}
+                        target="_blank"
+                    >
+                        <div className="d-flex justify-content-start align-items-center w-100">
+                            <FontAwesomeIcon icon={faClockRotateLeft} fontSize="18px" />
+                            <span className="custom-nav-item__nav-name d-block">Transaction History</span>
+                        </div>
+                    </Nav.Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                    <Nav.Link
+                        className={`custom-nav-item-nav d-flex align-items-center`}
+                        as={Link}
+                        to={`/explorer`}
+                        target="_blank"
+                    >
+                        <div className="d-flex justify-content-start align-items-center w-100">
+                            <FontAwesomeIcon icon={faArrowUpRightFromSquare} fontSize="18px" />
+                            <span className="custom-nav-item__nav-name d-block">Explorer</span>
+                        </div>
+                    </Nav.Link>
+                </Nav.Item>
 
                 <hr className="mx-3" />
 

@@ -1,30 +1,32 @@
-import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRotateRight, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Button, Card, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { Button, Card, Form, Stack, Table } from "react-bootstrap";
+import { Link, useSearchParams } from "react-router-dom";
 import { Loading, TableMask } from "../../../../common/components";
 import { StringFormatter } from "../../../../common/utils";
 import { HttpService } from "../../../../services";
 import { TxStatusBadge } from "../../components/badge";
+import { toast } from "react-toastify";
 
 export interface ITransactionHistoryPageProps {}
 
 export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [dataSource, setDataSource] = useState([]);
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [filter, setFilter] = useState({
-        from: "",
-        to: "",
-        status: "",
+    const [filter, setFilter] = useState(() => {
+        const owner = searchParams.get("owner") || "";
+        return { owner, to: "", status: "" };
     });
 
     const fetchTransactionListAsync = async () => {
         try {
             setIsLoading(true);
-            const res = await HttpService.get<any>(`/transactions`);
+            const res = await HttpService.get<any>(`/transactions?owner=${filter.owner}`);
             setIsLoading(false);
 
             if (res.code === 200) {
@@ -37,6 +39,18 @@ export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
             setIsLoading(false);
             console.log(error);
         }
+    };
+
+    const handleSubmit = (event: SyntheticEvent) => {
+        event.preventDefault();
+        const target = event.target as typeof event.target & { owner: { value: string } };
+
+        setFilter({ ...filter, owner: target.owner.value });
+        setSearchParams(`owner=${target.owner.value}`);
+    };
+
+    const handleCopyValue = (value: any) => {
+        window.navigator.clipboard.writeText(value).then(() => toast.success("Coppied"));
     };
 
     useEffect(() => {
@@ -57,6 +71,30 @@ export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
 
     return (
         <>
+            <Card className="mb-3">
+                <Card.Body>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Transaction owner</Form.Label>
+
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter transaction owner"
+                                name="owner"
+                                defaultValue={filter.owner}
+                            />
+                        </Form.Group>
+
+                        <Stack direction="horizontal" className="justify-content-end">
+                            <Button variant="primary" type="submit">
+                                <FontAwesomeIcon icon={faMagnifyingGlass} className="me-2" />
+                                Filter
+                            </Button>
+                        </Stack>
+                    </Form>
+                </Card.Body>
+            </Card>
+
             <Card>
                 <Card.Header>
                     <Card.Title className="d-flex flex-row align-items-center gap-3 fs-4">
@@ -106,9 +144,25 @@ export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
                                             </td>
                                             <td>{new Date(item.createdAt * 1000).toLocaleString()}</td>
 
-                                            <td>{StringFormatter.formatDisplayAddress(item.from)}</td>
+                                            <td>
+                                                <span
+                                                    className="cursor-pointer"
+                                                    onClick={() => handleCopyValue(item.from)}
+                                                    title="Click to copy"
+                                                >
+                                                    {StringFormatter.formatDisplayAddress(item.from)}
+                                                </span>
+                                            </td>
                                             {/* <td>{item.type}</td> */}
-                                            <td>{StringFormatter.formatDisplayAddress(item.to)}</td>
+                                            <td>
+                                                <span
+                                                    className="cursor-pointer"
+                                                    onClick={() => handleCopyValue(item.to)}
+                                                    title="Click to copy"
+                                                >
+                                                    {StringFormatter.formatDisplayAddress(item.to)}
+                                                </span>
+                                            </td>
                                             <td>{item.amount} TECO</td>
                                             <td>
                                                 <TxStatusBadge status={item.status} />

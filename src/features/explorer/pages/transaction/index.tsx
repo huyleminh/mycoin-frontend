@@ -59,7 +59,7 @@ export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
         <>
             <Card>
                 <Card.Header>
-                    <Card.Title className="d-flex flex-row align-items-center gap-3">
+                    <Card.Title className="d-flex flex-row align-items-center gap-3 fs-4">
                         <p className="mb-0">All Transactions</p>
 
                         <Button
@@ -117,9 +117,8 @@ export function TransactionHistoryPage(_props: ITransactionHistoryPageProps) {
                                     );
                                 })}
                             </tbody>
-
-                            {mapped.length === 0 && <div className="w-100 text-center p-3">No data founded</div>}
                         </Table>
+                        {mapped.length === 0 && <div className="w-100 text-center p-3">No data founded</div>}
                     </TableMask>
                 </Card.Body>
             </Card>

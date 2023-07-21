@@ -15,11 +15,11 @@ export interface IPasswordForm {
 
 const passwordSchema = z.object({
     password: z
-        .string({ required_error: "Password cannot empty" })
+        .string({ required_error: "Password cannot be empty" })
         .trim()
         .min(8, { message: "Password must be at least 8 characters" }),
     confirmPassword: z
-        .string({ required_error: "Confirm password cannot empty" })
+        .string({ required_error: "Confirm password cannot be empty" })
         .trim()
         .min(8, { message: "Confirm password must be at least 8 characters" }),
 });

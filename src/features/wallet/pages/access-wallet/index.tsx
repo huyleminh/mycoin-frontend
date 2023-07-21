@@ -1,4 +1,4 @@
-import { Card, Stack } from "react-bootstrap";
+import { Button, Card, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./styles.scss";
 import { useState } from "react";
@@ -46,6 +46,10 @@ export function AccessWalletPage(_props: IAccessWalletPageProps) {
                         </Stack>
                     </Stack>
                 </Card>
+
+                <Link to="/" className="mt-3">
+                    <button className="btn text-white border border-1">Back to home</button>
+                </Link>
             </Stack>
 
             <AccessKeystoreModal show={modal.show} onHide={modal.onClose} />

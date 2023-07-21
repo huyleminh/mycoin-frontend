@@ -35,6 +35,7 @@ export function WalletPortfolio(_props: IWalletPortfolioProps) {
             if (res.code === 200) {
                 const data = res.data;
                 setBalance(data?.balance || 0);
+                authContext.setUserKeyInfo({ ...userKeyInfo, balance: data?.balance || 0 });
                 return;
             }
         } catch (error) {
@@ -67,8 +68,6 @@ export function WalletPortfolio(_props: IWalletPortfolioProps) {
                 <Col md={8}>
                     <Card>
                         <Card.Body>
-                            {/* <Card.Title className="text-dark px-2">My Portfolio</Card.Title> */}
-
                             <Stack
                                 direction="horizontal"
                                 className="mb-3 align-items-center justify-content-start"

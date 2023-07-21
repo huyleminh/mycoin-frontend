@@ -2,9 +2,10 @@ import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export interface IUserKeyInfo {
-    privateKey?: string;
-    publickey?: string;
-    timestamp?: number;
+    privateKey: string;
+    publickey: string;
+    timestamp: number;
+    balance: number;
 }
 
 interface IAuthContext {
@@ -22,14 +23,19 @@ const AuthContext = createContext<IAuthContext | null>(null);
 export const AuthContextProvider = (props: IAuthContextProvider) => {
     const navigate = useNavigate();
 
-    const [authInfo, setAuthInfo] = useState<IUserKeyInfo>({});
+    const [authInfo, setAuthInfo] = useState<IUserKeyInfo>({
+        privateKey: "",
+        publickey: "",
+        timestamp: 0,
+        balance: 0,
+    });
 
     const setUserKeyInfo = (userKeyInfo: IUserKeyInfo) => {
         setAuthInfo({ ...authInfo, ...userKeyInfo });
     };
 
     const removeUserKeyInfo = async () => {
-        setAuthInfo({});
+        setAuthInfo({ privateKey: "", publickey: "", timestamp: 0, balance: 0 });
         navigate("/");
     };
 

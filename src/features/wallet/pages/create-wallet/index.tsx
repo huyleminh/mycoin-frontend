@@ -46,6 +46,10 @@ export function CreateWalletPage(_props: ICreateWalletPageProps) {
                         </Stack>
                     </Stack>
                 </Card>
+
+                <Link to="/" className="mt-3">
+                    <button className="btn text-white border border-1">Back to home</button>
+                </Link>
             </Stack>
 
             <CreateWalletModal show={modal.show} onHide={modal.onClose} />

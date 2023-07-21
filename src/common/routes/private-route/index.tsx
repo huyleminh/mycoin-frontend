@@ -34,7 +34,7 @@ export function PrivateRoute(props: IPrivateRouteProps) {
     if (process.isLoading) {
         return (
             <div style={{ height: "100vh" }}>
-                <Loading message="Đang kiểm tra quyền truy cập, vui lòng đợi trong giây lát ..." color={"primary"} />
+                <Loading message="Checking permission, please waiting for a moment..." color={"primary"} />
             </div>
         );
     }

@@ -1,6 +1,8 @@
 import { Button, Card, Stack } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 export function HomePage() {
     const navigate = useNavigate();
@@ -33,6 +35,13 @@ export function HomePage() {
                         Create Wallet
                     </Button>
                 </Stack>
+
+                <hr />
+
+                <Link to="/explorer" className="text-decoration-underline text-center">
+                    Go to Explorer{" "}
+                    <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </Link>
             </Card>
         </Stack>
     );

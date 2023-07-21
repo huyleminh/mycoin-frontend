@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PageNotFound } from "./common/pages";
+import { PrivateRoute } from "./common/routes";
+import { ExplorerFeature } from "./features/explorer";
 import { HomePage } from "./features/home";
 import { WalletFeature } from "./features/wallet";
-import { PrivateRoute } from "./common/routes";
 import { WalletDashboadFeature } from "./features/wallet-dashboad";
 import { SendTransactionPage, WalletPortfolio } from "./features/wallet-dashboad/pages";
 
@@ -22,6 +23,8 @@ function App() {
                 </Route>
 
                 <Route path="/wallet/*" element={<WalletFeature />} />
+
+                <Route path="/explorer/*" element={<ExplorerFeature />} />
 
                 {/* Error */}
                 <Route path="/404" element={<PageNotFound />} />

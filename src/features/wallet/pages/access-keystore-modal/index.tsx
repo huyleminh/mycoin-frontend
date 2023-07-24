@@ -75,6 +75,7 @@ export function AccessKeystoreModal(props: IAccessKeystoreModalProps) {
                 privateKey: userKeyData.privateKey,
                 publickey: userKeyData.publicKey,
                 timestamp: userKeyData.timestamp,
+                balance: 0,
             });
             navigate("/wallet/dashboard");
         } catch (error) {

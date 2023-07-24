@@ -6,11 +6,8 @@
 
 ## Usage
 - Create .env file at root folder
-- Unzip npmrc-content.zip to get the .npmrc file
-- Put .npmrc at root folder. If the token is expired or invalid, please contact me via this email:leminhhuy@gmai.com
-
 - Install packages: ```npm install```
-- Start app
+- Start app: ```npm run dev```
 - Open http://localhost:5173
 
 ## Video demo

@@ -10,7 +10,7 @@ export function HomePage() {
     return (
         <Stack className="home-container align-items-center justify-content-center" direction="vertical">
             <Card className="home-card p-4">
-                <h1 className="mb-3 w-100 text-center">MyCoin Wallet</h1>
+                <h1 className="mb-3 w-100 text-center">TECO Wallet</h1>
 
                 <div className="home-card-image mb-3 mx-auto">
                     <img src="images/digital_wallet.jpg" loading="lazy" alt="wallet" />
